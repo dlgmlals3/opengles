@@ -1,11 +1,12 @@
 #include "folderwidget.h"
+#include <QMessageLogger>
 
 FolderWidget::FolderWidget(QWidget *parent)
     : QOpenGLWidget(parent),
       mIndexBuf(QOpenGLBuffer::IndexBuffer),
       mTexture(0),
       mWidth(0), mHeight(0), mAngle(0.0f),
-      mNumOfVertices(0)
+      mNumOfVertices(0), mChange(false)
 {
 }
 
@@ -70,6 +71,8 @@ void FolderWidget::resizeGL(int w, int h) {
     mProjection.setToIdentity();
     mProjection.frustum(left, right, bottom, top, zNear, zFar);
 
+    qDebug() <<" dlgmlals3";
+
     createPlaneMesh(600, 400, 2, 2);
 }
 
@@ -98,6 +101,9 @@ void FolderWidget::paintGL() {
     mAngle = mAnimation->currentValue().toFloat();
     int angleLocation = mProgram.attributeLocation("aAngle");
     mProgram.setAttributeValue(angleLocation, mAngle);
+
+    int changeLocation = mProgram.attributeLocation("aChange");
+    mProgram.setAttributeValue(changeLocation, mChange);
 
     mIndexBuf.bind();
     glDrawElements(GL_TRIANGLES, mIndexBuf.size() / sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
@@ -163,6 +169,7 @@ void FolderWidget::createPlaneMesh(float width, float height, int wResolution, i
 }
 
 void FolderWidget::mouseReleaseEvent(QMouseEvent *e) {
+    mChange = mChange ? false : true;
     mAnimation->start();
     update();
 }

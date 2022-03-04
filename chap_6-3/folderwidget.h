@@ -38,7 +38,7 @@ private:
     int mWidth, mHeight;
     float mAngle;
     int mNumOfVertices;
-
+    bool mChange;
     QVariantAnimation *mAnimation;
     const int DURATION = 1000;
     const float START_VALUE = 0.0f;
