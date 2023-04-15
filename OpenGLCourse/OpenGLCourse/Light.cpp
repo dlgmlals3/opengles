@@ -9,6 +9,7 @@ Light::Light()
 	diffuseIntensity = 0.0f;
 }
 
+
 Light::Light(GLfloat red, GLfloat green, GLfloat blue, GLfloat aIntensity,
 	GLfloat xDir, GLfloat yDir, GLfloat zDir, GLfloat dIntensity)
 {
